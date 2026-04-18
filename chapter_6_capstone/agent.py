@@ -11,7 +11,7 @@ Subagents:
   - code_review_agent    — reviews open PRs and file diffs
   - coding_agent         — implements code changes and opens PRs
 
-Requires: GITHUB_APP_ID, GITHUB_APP_PRIVATE_KEY, GITHUB_REPOSITORY, GROQ_API_KEY
+Requires: GITHUB_APP_ID, GITHUB_APP_PRIVATE_KEY, GITHUB_REPOSITORY, GOOGLE_API_KEY
 """
 
 import sys
@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from deepagents import create_deep_agent
 from langchain_community.agent_toolkits.github.toolkit import GitHubToolkit
 from langchain_community.utilities.github import GitHubAPIWrapper
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from deepagents.backends import FilesystemBackend
 
 from dotenv import load_dotenv
@@ -41,12 +41,10 @@ load_dotenv()
 # ── LLM + GitHub tools ──────────────────────────────────────────────────────
 HERE = Path(__file__).parent
 
-llm = ChatGroq(
-    model="openai/gpt-oss-20b",
+llm = ChatGoogleGenerativeAI(
+    model="gemma-4-31b-it",
     temperature=0,
     max_tokens=6000,
-    reasoning_format="parsed",
-    timeout=None,
     max_retries=2,
 )
 

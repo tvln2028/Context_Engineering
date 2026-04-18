@@ -14,7 +14,7 @@ from pathlib import Path
 from deepagents import create_deep_agent
 from deepagents.backends import FilesystemBackend
 from langchain.agents.middleware import dynamic_prompt
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
 
 import sys
@@ -23,12 +23,10 @@ from example import SAMPLE_PR_DIFF  # Large multi-file PR diff (in same director
 
 load_dotenv()
 
-llm = ChatGroq(
-    model="openai/gpt-oss-20b",
+llm = ChatGoogleGenerativeAI(
+    model="gemma-4-31b-it",
     temperature=0,
     max_tokens=6000,
-    reasoning_format="parsed",
-    timeout=None,
     max_retries=2,
 )
 
