@@ -26,7 +26,7 @@ This tutorial walks through 8 progressive chapters, each adding one context engi
 
 - Python 3.12+
 - [`uv`](https://github.com/astral-sh/uv) (recommended) or `pip`
-- A [Groq API key](https://console.groq.com/) (free tier works for all chapters)
+- An [OpenAI API key](https://platform.openai.com/api-keys) (works for all chapters)
 - For chapters 6 & 7: a GitHub App with repo access (see setup below)
 
 ## Installation
@@ -38,28 +38,41 @@ cd context_engineering
 uv sync
 ```
 
+Run any chapter (no venv activation required):
+
+```bash
+uv run python chapter_0_deepagent/simple_deepagent.py
+```
+
+On **Windows PowerShell**, if you prefer activating the venv first, use `.venv` (not `venv`):
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+python chapter_0_deepagent/simple_deepagent.py
+```
+
 ## Environment Variables
 
 Copy `.env.example` to `.env` in the root:
 
 ```bash
-GROQ_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
 ```
 
-For **chapters 6 & 7**, also set in the chapter's `.env`:
+For **chapter 6**, also set in the chapter's `.env`:
 
 ```bash
 GITHUB_APP_ID=your_app_id
 GITHUB_APP_PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\n..."
 GITHUB_REPOSITORY=owner/repo
-GROQ_API_KEY=your_key_here
+OPENAI_API_KEY=your_key_here
 ```
 
 ---
 
 ## Chapters 0–5: No GitHub Account Required
 
-All examples in chapters 0–5 use **realistic fake input strings** — a sample PR diff, a fake issue body, etc. You only need a Groq API key.
+All examples in chapters 0–5 use **realistic fake input strings** — a sample PR diff, a fake issue body, etc. You only need an OpenAI API key.
 
 ---
 
@@ -146,11 +159,16 @@ Everything comes together. A coordinator agent delegates to five specialist suba
 - **code_review_agent** — reviews open PRs and file diffs
 - **coding_agent** — implements code changes and opens PRs
 
-Requires GitHub App credentials.
+Requires GitHub App credentials for live API access. Without them, the script runs in **demo mode** with sample PR data (same pattern as chapters 0–5).
 
 ```bash
-cp chapter_6_capstone/sample.env chapter_6_capstone/.env
-# Fill in your credentials, then:
+# Demo mode (OPENAI_API_KEY only):
+uv run python chapter_6_capstone/agent.py
+
+# Live GitHub mode — add to .env:
+# GITHUB_APP_ID=...
+# GITHUB_APP_PRIVATE_KEY=...
+# GITHUB_REPOSITORY=owner/repo
 uv run python chapter_6_capstone/agent.py
 ```
 

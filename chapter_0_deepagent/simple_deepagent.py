@@ -9,16 +9,15 @@ multiple steps. Even without tools, it reasons more deeply than a single LLM cal
 """
 
 from deepagents import create_deep_agent
-from langchain_groq import ChatGroq
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
 
-llm = ChatGroq(
-    model="openai/gpt-oss-20b",
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
     temperature=0,
     max_tokens=6000,
-    reasoning_format="parsed",
     timeout=None,
     max_retries=2,
 )

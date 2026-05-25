@@ -14,7 +14,7 @@ from pathlib import Path
 from deepagents import create_deep_agent
 from deepagents.backends import FilesystemBackend
 from langchain.agents.middleware import dynamic_prompt
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 
 import sys
@@ -23,8 +23,8 @@ from example import SAMPLE_PR_DIFF  # Large multi-file PR diff (in same director
 
 load_dotenv()
 
-llm = ChatGoogleGenerativeAI(
-    model="gemma-4-31b-it",
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
     temperature=0,
     max_tokens=6000,
     max_retries=2,
